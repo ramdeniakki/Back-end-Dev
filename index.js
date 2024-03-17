@@ -3,6 +3,7 @@ const fs = require('fs');
 const http = require('http');
 const path = require('path');
 
+/*
 // Reading the content of the file './txt/input.txt' synchronously using 'readFileSync' function from 'fs' module.
 // 'utf-8' specifies the encoding of the file, which is necessary to correctly interpret special characters.
 const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
@@ -29,6 +30,7 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
     // Logging the data read from the file.
     console.log(data);
 });
+*/
 
 // Creating an HTTP server using the 'createServer' method from the 'http' module.
 const server = http.createServer((req, res) => {
@@ -39,15 +41,20 @@ const server = http.createServer((req, res) => {
     if (pathName === '/' || pathName === '/overview') {
         // Sending response for the '/' and '/overview' routes.
         res.end('This is overview');
-    } else if (pathName === '/products') {
-        // Sending response for the '/products' route.
-        res.end('This is products');
+    } else if (pathName === '/api') {
+        fs.readFile(`${__dirname}/dev-data/data.json`,'utf-8',(err,data)=>{
+            const productData = JSON.parse(data);
+            res.writeHead(200,{'content-type': 'application/json'});
+            res.end(data)
+        })
+        
+       
     } else {
         // Sending response for any other route.
         res.write('Page not Found');
         res.end();
-        console.log(pathName)
     }
+    console.log("Hello This is from The Server!");
 });
 
 // Making the server listen on port 8000 and localhost (127.0.0.1).
