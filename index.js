@@ -33,20 +33,31 @@ fs.readFile("./txt/start.txt", "utf-8", (err, data) => {
 */
 
 // Creating an HTTP server using the 'createServer' method from the 'http' module.
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8')
+const tempoverview = fs.readFileSync(`${__dirname}/templates/template-.html`,'utf-8')
+
+const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`,'utf-8')
+const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`,'utf-8')
+
+
+
+
+const dataObj = JSON.parse(data);
 const server = http.createServer((req, res) => {
     // Extracting the requested URL path from the request object.
     const pathName = req.url;
 
     // Handling different routes based on the requested URL path.
+    // overviewpage
     if (pathName === '/' || pathName === '/overview') {
         // Sending response for the '/' and '/overview' routes.
-        res.end('This is overview');
+        res.writeHead(200,{'Content-type':'text/html'})
+        res.end(tempoverview);
     } else if (pathName === '/api') {
-        fs.readFile(`${__dirname}/dev-data/data.json`,'utf-8',(err,data)=>{
-            const productData = JSON.parse(data);
+    
+            
             res.writeHead(200,{'content-type': 'application/json'});
             res.end(data)
-        })
         
        
     } else {
