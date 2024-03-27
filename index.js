@@ -48,18 +48,23 @@ const server = http.createServer((req, res) => {
     const pathName = req.url;
 
     // Handling different routes based on the requested URL path.
+
+
+
     // overviewpage
     if (pathName === '/' || pathName === '/overview') {
         // Sending response for the '/' and '/overview' routes.
         res.writeHead(200,{'Content-type':'text/html'})
         res.end(tempoverview);
+    
+    // API PAGE
     } else if (pathName === '/api') {
     
             
             res.writeHead(200,{'content-type': 'application/json'});
             res.end(data)
         
-       
+       // 404 Page ERROR
     } else {
         // Sending response for any other route.
         res.write('Page not Found');
@@ -67,6 +72,7 @@ const server = http.createServer((req, res) => {
     }
     console.log("Hello This is from The Server!");
 });
+
 
 // Making the server listen on port 8000 and localhost (127.0.0.1).
 server.listen(8000, '127.0.0.1', () => {
